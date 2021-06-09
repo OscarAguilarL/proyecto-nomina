@@ -1,2 +1,3 @@
-# Sistema nomina
-Sistema para generar nominas y cheques de trabajadores en PHP
+# proyecto-nomina
+
+Aplicación web para gestion de nomina de trabajadores,
