@@ -15,7 +15,7 @@
       <label for="base" class="form-label">
         <span>Salario por hora normal $:</span>
         <input type="number" name="base" id="salario" min="1" placeholder="100" required>
-        </label>
+      </label>
       <label for="extra" class="form-label">
         <span>Salario por hora extra $:</span>
         <input type="number" name="extra" id="salario" min="1" placeholder="200" required>
@@ -47,7 +47,7 @@
             <td><?= $row['salario_hora_extra'] ?></td>
             <td>
               <a href="edit-puesto.php?id=<?= $row['idPuesto'] ?>">Editar</a>
-              <a href="delete-puesto.php?id=<?= $row['idPuesto'] ?>" onclick="confirm('Desea eliminar?')">Eliminar</a>
+              <a href="delete-puesto.php?id=<?= $row['idPuesto'] ?>" class="delete">Eliminar</a>
             </td>
           </tr>
         <?php endwhile ?>

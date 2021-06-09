@@ -73,7 +73,7 @@
             <td class="table-ellipsis"><?= $row['CURP'] ?></td>
             <td>
               <a href="edit-trabajador.php?id=<?php echo $row['idTrabajador'] ?>">Editar</a>
-              <a href="delete-trabajador.php?id=<?= $row['idTrabajador'] ?>" onclick="confirm('Desea eliminar?')">Eliminar</a>
+              <a href="delete-trabajador.php?id=<?= $row['idTrabajador'] ?>" class="delete">Eliminar</a>
             </td>
           </tr>
         <?php endwhile ?>

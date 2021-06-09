@@ -11,6 +11,20 @@
   <link rel="stylesheet" href="./static/css/styles.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- JQUERY para confirmar la acción de eliminar -->
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(() => {
+      $("a.delete").click(e => {
+        if (!confirm('Are you sure?')) {
+          e.preventDefault();
+          return false;
+        }
+        return true;
+      });
+    });
+  </script>
   <title>Gestion de nómina</title>
 </head>
 
