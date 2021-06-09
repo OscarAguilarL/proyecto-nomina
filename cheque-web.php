@@ -22,7 +22,7 @@ if (isset($_GET['id'])) :
     <center>
       <h2>Recibo de cheque</h2>
     </center>
-    <p style="text-align: end;">Numero de nomina: <b><?= $cheque['idCheque'] ?></b></p>
+    <p style="text-align: end;">Numero de cheque: <b><?= $cheque['idCheque'] ?></b></p>
     <h2>Datos del empleado</h2>
     <p>
       <b>Nombre:</b>

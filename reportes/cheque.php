@@ -42,7 +42,7 @@ if (isset($_GET['id'])) {
 
   /* --- No. de Nomina --- */
   $pdf->SetXY(107, 30);
-  $pdf->Cell(40, 8, 'No. de Nomina:');
+  $pdf->Cell(40, 8, 'No. de Cheque:');
   $pdf->SetFont('Arial', 'B', 18);
   $pdf->Cell(20, 8, $cheque['idCheque']);
 
