@@ -91,6 +91,24 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+CREATE view vista_cheque AS
+SELECT
+	idTrabajador,
+    idCheque,
+    CONCAT(t.nombre, ' ', t.apellido_paterno, ' ', t.apellido_materno) AS Nombre,
+    p.nombre AS Puesto,
+    t.RFC,
+    t.CURP,
+    c.sueldo_base,
+    c.descuento_isr,
+    c.descuento_retiro,
+    c.descuento_vivienda,
+    c.descuento_seguro,
+    c.sueldo_neto
+FROM
+	trabajador AS t
+	INNER JOIN cheque AS c ON t.idTrabajador = c.Trabajador_idTrabajador
+    INNER JOIN puesto AS p ON t.Puesto_idPuesto = p.idPuesto;
 
 INSERT INTO `puesto` VALUES (1,'Frontend','React Frontend Developer',300,600),
 							(2,'Backend','Django Backend Developer',250,500),
@@ -138,7 +156,7 @@ BEGIN
             SET desc_s = sueldo_b * NEW.seguro_social/100;
             SET total_desc = desc_isr + desc_r + desc_v + desc_s;
             SET sueldo_n = sueldo_b - total_desc;
-			UPDATE cheque 
+			UPDATE cheque
 				SET hrs_normales_trabajadas = hrs_norm,
                 hrs_extra_trabajadas = hrs_ex,
                 sueldo_base = sueldo_b,
