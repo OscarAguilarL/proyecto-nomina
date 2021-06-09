@@ -56,6 +56,7 @@
           <th>Celular</th>
           <th>RFC</th>
           <th>CURP</th>
+          <th>Puesto</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -64,6 +65,7 @@
         $trabajador_data = get_trabajadores($db);
         while ($row = mysqli_fetch_array($trabajador_data)) :
           $name = $row['apellido_paterno'] . ' ' . $row['apellido_materno'] . ', ' . $row['nombre'];
+          $puesto = get_puesto($db, $row['Puesto_idPuesto']);
         ?>
           <tr>
             <td class="table-ellipsis"><?= $name ?></td>
@@ -71,8 +73,9 @@
             <td><?= $row['celular'] ?></td>
             <td><?= $row['RFC'] ?></td>
             <td class="table-ellipsis"><?= $row['CURP'] ?></td>
+            <td><?= $puesto['nombre'] ?></td>
             <td>
-              <a href="edit-trabajador.php?id=<?php echo $row['idTrabajador'] ?>">Editar</a>
+              <a href="edit-trabajador.php?id=<?= $row['idTrabajador'] ?>">Editar</a>
               <a href="delete-trabajador.php?id=<?= $row['idTrabajador'] ?>" class="delete">Eliminar</a>
             </td>
           </tr>
