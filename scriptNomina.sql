@@ -90,37 +90,26 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+select * from trabajador;
 
-CREATE view vista_cheque AS
-SELECT
-	idTrabajador,
-    idCheque,
-    CONCAT(t.nombre, ' ', t.apellido_paterno, ' ', t.apellido_materno) AS Nombre,
-    p.nombre AS Puesto,
-    t.RFC,
-    t.CURP,
-    c.sueldo_base,
-    c.descuento_isr,
-    c.descuento_retiro,
-    c.descuento_vivienda,
-    c.descuento_seguro,
-    c.sueldo_neto
-FROM
-	trabajador AS t
-	INNER JOIN cheque AS c ON t.idTrabajador = c.Trabajador_idTrabajador
-    INNER JOIN puesto AS p ON t.Puesto_idPuesto = p.idPuesto;
-
+-- Inserción de registros a la Base de Datos
 INSERT INTO `puesto` VALUES (1,'Frontend','React Frontend Developer',300,600),
 							(2,'Backend','Django Backend Developer',250,500),
                             (3,'Lider de Desarrollo','Lider de desarrollo de ingenieria',400,800),
                             (9,'CEO','Chief Executive Officer',100,200),
                             (10,'Diseñador UI','User Interface Designer',80,160);
+                            -- (20,'Esther','Pérez','Ávila','PEAE7704299FA','PEAE770429MHGRVS04','Pachuca, Hgo','7715660519',2),
 INSERT INTO `trabajador` VALUES (11,'Porfirio','Aguilar','Cuenca','AUCP710915CC7','AUCP710915HHGGNR09','Actopan, Hgo','7721239087',3),
+								(DEFAULT,'Levi','Revilla','Pérez','REPL011116GL9','REPL011116HHGVRVA8','Pachuca, Hgo','7715660519',2),
+								(DEFAULT,'Eunice','Pérez','Ávila','PEAE790826DN6','PEAE790826MHGRVN09','Pachuca, Hgo','7717092774',9),
+								(20,'Saúl Jaret','Gómez','Carbajal','GOCS0104264TA','GOCS010426HHGMRLA3','Pachuca, Hgo','7713810229',10),
 								(15,'Oscar','Aguilar','López','AULO990824BC9','AULO990824HHGGPS03','Actopan, Hgo','1231321321',1);
 INSERT INTO `cheque` VALUES (27,11,40,5,20000,3000,1000,1000,2000,13000),
                             (32,15,32,1,10200,1530,510,510,1020,6630);
 INSERT INTO `configuracion` VALUE(1,40,20000,15,30,5,4,10);
 
+
+-- Se crea un Trigger para actualizar automàticamente los valores de la tabla cheque cuando se actualiza la configuración
 DELIMITER $$
 CREATE TRIGGER calcularDescuentos AFTER UPDATE ON configuracion
 FOR EACH ROW
@@ -156,7 +145,7 @@ BEGIN
             SET desc_s = sueldo_b * NEW.seguro_social/100;
             SET total_desc = desc_isr + desc_r + desc_v + desc_s;
             SET sueldo_n = sueldo_b - total_desc;
-			UPDATE cheque
+			UPDATE cheque 
 				SET hrs_normales_trabajadas = hrs_norm,
                 hrs_extra_trabajadas = hrs_ex,
                 sueldo_base = sueldo_b,
@@ -173,6 +162,26 @@ END;
 $$
 DELIMITER ;
 
+-- Se crea una vista para manipular más fácilmente las columnas que necesitamos en ocasiones
+create view vista_cheque as
+select
+	idTrabajador,
+    idCheque,
+    concat(t.nombre, ' ', t.apellido_paterno, ' ', t.apellido_materno) as Nombre,
+    p.nombre as Puesto,
+    t.RFC,
+    t.CURP,
+    c.sueldo_base,
+    c.descuento_isr,
+    c.descuento_retiro,
+    c.descuento_vivienda,
+    c.descuento_seguro,
+    c.sueldo_neto
+from 
+	trabajador as t
+	inner join cheque as c on t.idTrabajador = c.Trabajador_idTrabajador
+    inner join puesto as p on t.Puesto_idPuesto = p.idPuesto;
+    
 -- SELECT * FROM trabajador,cheque
    --         WHERE cheque.Trabajador_idTrabajador = trabajador.idTrabajador
      --       ORDER BY apellido_paterno ASC;

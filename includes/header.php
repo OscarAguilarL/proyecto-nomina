@@ -17,7 +17,7 @@
   <script language="JavaScript" type="text/javascript">
     $(document).ready(() => {
       $("a.delete").click(e => {
-        if (!confirm('Are you sure?')) {
+        if (!confirm('Desea eliminar?')) {
           e.preventDefault();
           return false;
         }
