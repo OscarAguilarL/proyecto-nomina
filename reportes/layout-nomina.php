@@ -14,7 +14,7 @@ class PDF extends FPDF
     // Title
     $this->Cell(30, 10, 'Recibo de nomina', 0, 0, 'C');
     // Line break
-    $this->Ln(20);
+    $this->Ln(15);
   }
 
   // Page footer

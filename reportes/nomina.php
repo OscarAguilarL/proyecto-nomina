@@ -33,18 +33,21 @@ if (isset($_GET['cant'])) {
         $pdf->SetFont('Arial', '', 12);
 
         /* --- Numero de registro --- */
-        $pdf->Cell(40, 8, 'Fecha de la nomina:');
-        $pdf->Cell(20, 8, utf8_decode($fechaNomina));
+        $pdf->Cell(40, 5, 'Fecha de la nomina:');
+        $pdf->Cell(20, 5, utf8_decode($fechaNomina));
         $pdf->Ln();
 
-        /* --- Numero de trabajador --- */
+        /* --- Folio de nomina --- */
         $pdf->Cell(40, 8, 'Folio:');
         $pdf->Cell(20, 8, $folio);
+
+        /* --- Numero de trabajador --- */
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 10);
-        $pdf->SetY(60);
+        $pdf->SetY(45);
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFillColor(79, 78, 77);
+        $pdf->Cell(10, 15, 'Reg', 0, 0, 'C', 1);
         $pdf->Cell(25, 15, 'No. Trabajador', 0, 0, 'C', 1);
         $pdf->Cell(35, 15, 'Nombre', 0, 0, 'C', 1);
         $pdf->Cell(25, 15, 'Hrs trabajadas', 0, 0, 'C', 1);
@@ -66,6 +69,7 @@ if (isset($_GET['cant'])) {
             $row = mysqli_fetch_array($cheques);
             $name = utf8_decode($row['apellido_paterno'] . " " . $row['apellido_materno'] . ", " . $row['nombre']);
 
+            $pdf->Cell(10, 10, $j, 'B', 0, 'C', 1);
             $pdf->Cell(25, 10, $row['idTrabajador'], 'B', 0, 'C', 1);
             $pdf->Cell(35, 10, $name, 'B', 0, 'C', 1);
             $pdf->Cell(25, 10, $row['hrs_normales_trabajadas'], 'B', 0, 'C', 1);
@@ -78,7 +82,6 @@ if (isset($_GET['cant'])) {
             $pdf->Cell(20, 10, $row['idCheque'], 'B', 0, 'C', 1);
             $pdf->Ln();
 
-
             $suma['s_base'] += $row['sueldo_base'];
             $suma['isr'] += $row['descuento_isr'];
             $suma['retiro'] += $row['descuento_retiro'];
@@ -89,31 +92,51 @@ if (isset($_GET['cant'])) {
             $j++;
         }
 
-        if ($j > $cant_cheques) {
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Cantidad de Cheques Expedidos en la Nomina: $cant_cheques");
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total de Sueldos Base: " . $suma['s_base']);
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total de Descuentos por ISR: " . $suma['isr']);
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total depositos a cuentas de Ahorro para el Retiro: " . $suma['retiro']);
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total depositos a cuentas de Vivienda: " . $suma['vivienda']);
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total depositos a cuentas de Seguro Social: " . $suma['seguro']);
-            $pdf->Ln();
-            $pdf->Cell(40, 7, "Suma Total de Sueldos Netos: " . $suma['s_neto']);
-        }
-
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Ln();
         $pdf->Ln();
         $pdf->Cell(40, 7, "It is good to be with us.");
         $pdf->Ln();
         $pdf->Cell(40, 7, "Una vez pagado no hay cambios");
         $pdf->Ln();
         $pdf->Cell(40, 7, "Enjoy your salary");
+
+        if ($j > $cant_cheques) {
+            $pdf->AddPage('LANDSCAPE', 'LETTER');
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Cantidad de Cheques Expedidos en la Nomina:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, $cant_cheques);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total de Sueldos Base:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['s_base']);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total de Descuentos por ISR:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['isr']);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total depositos a cuentas de Ahorro para el Retiro:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['retiro']);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total depositos a cuentas de Vivienda:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['vivienda']);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total depositos a cuentas de Seguro Social:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['seguro']);
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(120, 7, "Suma Total de Sueldos Netos:");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(20, 7, '$' . $suma['s_neto']);
+        }
     }
     $pdf->Output();
 }

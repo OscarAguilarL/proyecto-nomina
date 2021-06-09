@@ -18,11 +18,11 @@
       </label>
       <label for="RFC" class="form-label">
         <span>RFC:</span>
-        <input required type="text" name="RFC" id="RFC" minlength="12" placeholder="AABJ020513PD9">
+        <input required type="text" name="RFC" id="RFC" minlength="12" maxlength="12" placeholder="AABJ020513PD9">
       </label>
       <label for="CURP" class="form-label">
         <span>CURP:</span>
-        <input required type="text" name="CURP" id="CURP" minlength="18" placeholder="JIMM770826HHGMNR52">
+        <input required type="text" name="CURP" id="CURP" minlength="18" maxlength="18" placeholder="JIMM770826HHGMNR52">
       </label>
       <label for="domicilio">
         <span>Domicilio:</span>

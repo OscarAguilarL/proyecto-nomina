@@ -63,11 +63,11 @@ if (isset($_POST['edit_trabajador'])) {
       </label>
       <label for="RFC" class="form-label">
         <span>RFC:</span>
-        <input required type="text" name="RFC" minlength="12" id="RFC" value="<?= $trabajador['RFC'] ?>">
+        <input required type="text" name="RFC" minlength="12" maxlength="12" id="RFC" value="<?= $trabajador['RFC'] ?>">
       </label>
       <label for="CURP" class="form-label">
         <span>CURP:</span>
-        <input required type="text" name="CURP" minlength="18" id="CURP" value="<?= $trabajador['CURP'] ?>">
+        <input required type="text" name="CURP" minlength="18" maxlength="18" id="CURP" value="<?= $trabajador['CURP'] ?>">
       </label>
       <label for="domicilio">
         <span>Domicilio:</span>
