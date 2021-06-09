@@ -25,12 +25,12 @@ if (isset($_POST['edit-puesto'])) {
   $desc = $_POST['desc'];
   $sueldobase = $_POST['base'];
   $sueldoextra = $_POST['extra'];
-  
-  $query = "UPDATE puesto 
-            SET nombre = '$nombre', 
-                descripcion = '$desc', 
+
+  $query = "UPDATE puesto
+            SET nombre = '$nombre',
+                descripcion = '$desc',
                 salario_hora_base = $sueldobase,
-                salario_hora_extra = $sueldoextra 
+                salario_hora_extra = $sueldoextra
             WHERE idPuesto = $id";
 
   $result = mysqli_query($db, $query);
@@ -50,7 +50,7 @@ if (isset($_POST['edit-puesto'])) {
 
 <div class="form-edit-container">
   <div class="form-container">
-    <h2>Registrar nuevo puesto</h2>
+    <h2>Editando puesto</h2>
     <form action="edit-puesto.php?id=<?= $id ?>" method="post" class="form">
       <label for="nombre" class="form-label">
         <span>Nombre:</span>
